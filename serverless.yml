@@ -1,0 +1,17 @@
+service: lambda
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  hello:
+    handler: src/functions/hello.handler
+    events:
+      - http:
+          path: hello
+          method: get
