@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "sls offline",
     "deploy": "sls deploy --aws-profile rentx",
-    "dynamodb-install": "sls dynamodb install"
+    "dynamo:install": "sls dynamodb install",
+    "dynamo:start": "sls dynamodb start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "aws-sdk": "^2.1048.0",
+    "dotenv": "^10.0.0",
     "esbuild": "^0.14.10",
     "serverless": "^2.70.0",
     "serverless-dynamodb-local": "^0.2.40",

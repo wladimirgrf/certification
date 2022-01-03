@@ -22,10 +22,10 @@ custom:
       migrate: true
 
 functions:
-  hello:
-    handler: src/functions/hello.handle
+  generateCertificate:
+    handler: src/functions/generateCertificate.handle
     events:
-      - httpApi: 'GET /hello'
+      - httpApi: 'POST /certificate'
 
 resources:
   Resources:
