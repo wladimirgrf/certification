@@ -7,11 +7,10 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
+  region: sa-east-1
 
 functions:
   hello:
-    handler: src/functions/hello.handler
+    handler: src/functions/hello.handle
     events:
-      - http:
-          path: hello
-          method: get
+      - httpApi: 'GET /hello'
