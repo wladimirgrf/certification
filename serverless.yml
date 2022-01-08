@@ -4,12 +4,22 @@ plugins:
   - serverless-esbuild
   - serverless-offline
   - serverless-dynamodb-local
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
   runtime: nodejs14.x
   region: sa-east-1
   lambdaHashingVersion: 20200924
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
 
 custom: 
   dynamodb:
@@ -27,10 +37,23 @@ functions:
     handler: src/functions/generateCertificate.handle
     events:
       - httpApi: 'POST /certificate'
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:PutItem
+        Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/users_certificates"
   verifyCertificate:
     handler: src/functions/verifyCertificate.handle
     events:
       - httpApi: 'GET /certificate/{id}'
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/users_certificates"
 
 resources:
   Resources:
@@ -47,4 +70,8 @@ resources:
         KeySchema: 
           - AttributeName: id
             KeyType: HASH
+
+package:
+    include:
+      - src/templates
 

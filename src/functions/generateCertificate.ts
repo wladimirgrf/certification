@@ -71,12 +71,7 @@ export const handle = async (event, context, callback) => {
 
   const content = await compile(data);
 
-  const s3 = new S3({
-    credentials: {
-      accessKeyId: process.env.ACCESS_KEY_ID,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY
-    }
-  });
+  const s3 = new S3();
 
   await s3.putObject({
     Bucket: "serverlesscertification",
