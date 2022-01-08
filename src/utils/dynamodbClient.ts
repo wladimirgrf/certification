@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { DynamoDB } from 'aws-sdk';
 
 const options = {
