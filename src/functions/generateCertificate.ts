@@ -51,7 +51,7 @@ export const handle: APIGatewayProxyHandler = async (event, context, callback) =
   return {
     statusCode: 201,
     body: JSON.stringify({
-      message: "Certificate created!",
+      message: "Certificate was created",
       link: `${process.env.AWS_S3_BASE_URL}/${id}.html`
     }),
     headers: {
