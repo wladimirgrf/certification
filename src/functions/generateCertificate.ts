@@ -1,80 +1,47 @@
-import path from "path";
-import fs from "fs";
-import handlebars from "handlebars";
+import "dotenv/config";
+
 import dayjs from "dayjs";
 import { S3 } from "aws-sdk";
+import { APIGatewayProxyHandler } from "aws-lambda";
 
-import { document } from "../utils/dynamodbClient";
+import { client } from "../utils/dynamodb";
+import { compile } from "../utils/handlebars";
 
-interface ICreateCertificate {
+interface IRequest {
   id: string;
   name: string;
   grade: string;
 }
 
-interface ITemplate {
-  id: string;
-  name: string;
-  grade: string;
-  date: string;
-}
+export const handle: APIGatewayProxyHandler = async (event, context, callback) => {
+  const { id, name, grade } = JSON.parse(event.body) as IRequest;
 
-const compile = async (data: ITemplate) => {
-  const templatePath = path.join(
-    process.cwd(),
-    "src",
-    "templates",
-    "certificate.hbs"
-  );
-
-  const medalPath = path.join(
-    process.cwd(),
-    "src",
-    "templates",
-    "selo.png"
-  );
-
-  const html = fs.readFileSync(templatePath, "utf-8");
-  const medal = fs.readFileSync(medalPath, "base64");
-
-  return handlebars.compile(html)({ ...data, medal });
-}
-
-export const handle = async (event, context, callback) => {
-  const { id, name, grade } = JSON.parse(event.body) as ICreateCertificate;
-
-  const TableName = "users_certificates";
-
-  const responseQuery = await document.query({
-    TableName,
+  const response = await client.query({
+    TableName: process.env.AWS_DYNAMODB_TABLE_NAME,
     KeyConditionExpression: "id = :id",
-    ExpressionAttributeValues: {
-      ":id": id
-    }
+    ExpressionAttributeValues: { ":id": id }
   }).promise();
 
-  const userAlreadyExists = responseQuery.Items[0];
+  const userFound = response.Items[0];
 
-  if(!userAlreadyExists){
-    const Item = { id, name, grade };
-    await document.put({ TableName, Item }).promise();
+  if (!userFound) {
+    await client.put({
+      TableName: process.env.AWS_DYNAMODB_TABLE_NAME,
+      Item: { id, name, grade }
+    }).promise();
   }
 
-  const today = dayjs().format("DD/MM/YYYY");
-
-  const data: ITemplate = {
+  const content = await compile({
     id,
     name,
     grade,
-    date: today,
-  }
-
-  const content = await compile(data);
+    date: dayjs().format("DD/MM/YYYY"),
+  });
 
   const s3 = new S3();
 
   await s3.putObject({
-    Bucket: "serverlesscertification",
+    Bucket: process.env.AWS_BUCKET_NAME,
     Key: `${id}.html`,
     ACL: "public-read",
     Body: content,
@@ -85,6 +52,7 @@ export const handle = async (event, context, callback) => {
     statusCode: 201,
     body: JSON.stringify({
       message: "Certificate created!",
+      link: `${process.env.AWS_S3_BASE_URL}/${id}.html`
     }),
     headers: {
       "Content-Type": "application/json"
