@@ -1,4 +1,5 @@
 service: certification
+useDotenv: true
 
 plugins:
   - serverless-esbuild
@@ -73,5 +74,5 @@ resources:
 
 package:
     include:
-      - src/templates
+      - src/views
 
