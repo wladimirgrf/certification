@@ -6,11 +6,12 @@ plugins:
   - serverless-offline
   - serverless-dynamodb-local
   - serverless-iam-roles-per-function
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   runtime: nodejs14.x
-  region: sa-east-1
+  region: ${env:AWS_PROVIDER_REGION}
   lambdaHashingVersion: 20200924
   iamRoleStatements:
     - Effect: Allow
@@ -44,7 +45,7 @@ functions:
         Action:
           - dynamodb:Query
           - dynamodb:PutItem
-        Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/users_certificates"
+        Resource: "arn:aws:dynamodb:${env:AWS_PROVIDER_REGION}:*:table/${env:AWS_DYNAMODB_TABLE_NAME}"
   verifyCertificate:
     handler: src/functions/verifyCertificate.handle
     events:
@@ -54,14 +55,14 @@ functions:
       - Effect: Allow
         Action:
           - dynamodb:Query
-        Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/users_certificates"
+        Resource: "arn:aws:dynamodb:${env:AWS_PROVIDER_REGION}:*:table/${env:AWS_DYNAMODB_TABLE_NAME}"
 
 resources:
   Resources:
     dbCertificateUsers: 
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: users_certificates
+        TableName: ${env:AWS_DYNAMODB_TABLE_NAME}
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

@@ -17,6 +17,7 @@
     "dotenv": "^10.0.0",
     "esbuild": "^0.14.10",
     "serverless": "^2.70.0",
+    "serverless-dotenv-plugin": "^3.12.2",
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-esbuild": "^1.23.2",
     "serverless-iam-roles-per-function": "^3.2.0",
