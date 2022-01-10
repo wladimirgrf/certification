@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "AWS_PROFILE=rentx sls offline",
-    "deploy": "sls deploy --aws-profile rentx",
+    "dev": "sls offline",
+    "deploy": "sls deploy",
     "dynamo:install": "sls dynamodb install",
     "dynamo:start": "sls dynamodb start"
   },
