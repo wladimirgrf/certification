@@ -1,16 +1,27 @@
 {
   "name": "certification",
+  "title": "certification",
   "version": "1.0.0",
-  "description": "",
+  "license": "MIT",
+  "keywords": [
+    "serverless",
+    "certification",
+    "aws-sdk",
+    "dynamodb",
+    "nodejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wladimirgrf/certification"
+  },
+  "description": "serverless for certificate generation through aws",
+  "author": "Wladimir <wladimir.code@gmail.com>",
   "scripts": {
     "dev": "sls offline",
     "deploy": "sls deploy",
     "dynamo:install": "sls dynamodb install",
     "dynamo:start": "sls dynamodb start"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.89",
     "aws-sdk": "^2.1048.0",
