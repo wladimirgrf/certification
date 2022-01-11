@@ -5,7 +5,7 @@
 [![](https://img.shields.io/github/issues/wladimirgrf/certification?color=%23000)](https://github.com/wladimirgrf/certification/issues)
 [![](https://img.shields.io/github/license/wladimirgrf/certification?color=%23000)]()
 
-Project developed for the Rocketseat Ignite (Node.js Path). This application is a simple serverless for certificate generation through AWS.
+Project developed for the Rocketseat Ignite (_Node.js Path_). This application is a simple serverless for certificate generation through AWS.
 
 ## 🌍 Ecosystem
 
