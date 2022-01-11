@@ -24,3 +24,58 @@ Below the technologies, used to build this Serverless:
 |<img height="55" src="https://cdn.worldvectorlogo.com/logos/aws-dynamodb.svg"> | <img alt="dynamodb version" src="https://img.shields.io/badge/dynamodb-v0.2-blue"> |
 |<img height="60" src="https://www.vectorlogo.zone/logos/handlebarsjs/handlebarsjs-ar21.svg"> | <img alt="handlebars version" src="https://img.shields.io/badge/handlebars-v4.7-blue"> |
 
+## ▶️ Getting started
+
+**Requirements**
+
+- [AWS | Configuration and credential file settings.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+
+**Clone the project and access the folder**
+
+```bash
+$ git clone https://github.com/wladimirgrf/certification.git && cd certification
+```
+
+**Follow the steps below**
+
+```bash
+# Project dependencies
+$ npm i
+
+# Make a copy of '.env.example' to '.env'
+# and set with YOUR environment variables.
+$ cp .env.example .env
+
+# Dynamodb local install
+$ npm run dynamo:install
+
+# Start Dynamodb
+$ npm run dynamo:start
+
+# Start the serverless
+$ npm run dev
+```
+
+## 🤝 Contributing
+
+```bash
+# Fork the repository
+# Clone your fork
+$ git clone fork-url && cd certification
+
+# Create a branch for your edits
+$ git checkout -b new-feature
+
+# Make the commit with your changes
+$ git commit -m 'feat: New feature'
+
+# Send the code to your remote branch
+$ git push origin new-feature
+```
+
+After your pull request is merged, you can delete your branch
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
